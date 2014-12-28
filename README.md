@@ -1,4 +1,2 @@
-angular_java
-============
-
-seed for dev
+README for singeleton
+==========================

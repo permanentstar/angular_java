@@ -1,0 +1,18 @@
+{
+  "generator-jhipster": {
+    "baseName": "singeleton",
+    "packageName": "com.star.permanent",
+    "packageFolder": "com/star/permanent",
+    "authenticationType": "cookie",
+    "hibernateCache": "no",
+    "clusteredHttpSession": "no",
+    "websocket": "no",
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "useCompass": false,
+    "buildTool": "maven",
+    "frontendBuilder": "grunt",
+    "javaVersion": "7"
+  }
+}
