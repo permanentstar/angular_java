@@ -1,4 +1,4 @@
-angular.module('singeletonAppUtils', [])
+angular.module('app.utils')
     .service('Base64Service', function () {
         var keyStr = "ABCDEFGHIJKLMNOP" +
             "QRSTUVWXYZabcdef" +

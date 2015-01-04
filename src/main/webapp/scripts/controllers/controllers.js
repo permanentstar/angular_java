@@ -2,13 +2,11 @@
 
 /* Controllers */
 
-singeletonApp.controller('MainController', function ($scope) {
-    });
-
-singeletonApp.controller('AdminController', function ($scope) {
-    });
-
-singeletonApp.controller('LanguageController', function ($scope, $translate, LanguageService) {
+app.controller('MainController', function ($scope) {
+    })
+    .controller('AdminController', function ($scope) {
+    })
+    .controller('LanguageController', function ($scope, $translate, LanguageService) {
         $scope.changeLanguage = function (languageKey) {
             $translate.use(languageKey);
 
@@ -20,12 +18,9 @@ singeletonApp.controller('LanguageController', function ($scope, $translate, Lan
         LanguageService.getBy().then(function (languages) {
             $scope.languages = languages;
         });
-    });
-
-singeletonApp.controller('MenuController', function ($scope) {
-    });
-
-singeletonApp.controller('LoginController', function ($scope, $location, AuthenticationSharedService) {
+    })
+    .controller('MenuController', function ($scope) { })
+    .controller('LoginController', function ($scope, $location, AuthenticationSharedService) {
         $scope.rememberMe = true;
         $scope.login = function () {
             AuthenticationSharedService.login({
@@ -34,13 +29,11 @@ singeletonApp.controller('LoginController', function ($scope, $location, Authent
                 rememberMe: $scope.rememberMe
             });
         }
-    });
-
-singeletonApp.controller('LogoutController', function ($location, AuthenticationSharedService) {
+    })
+    .controller('LogoutController', function ($location, AuthenticationSharedService) {
         AuthenticationSharedService.logout();
-    });
-
-singeletonApp.controller('SettingsController', function ($scope, Account) {
+    })
+    .controller('SettingsController', function ($scope, Account) {
         $scope.success = null;
         $scope.error = null;
         $scope.settingsAccount = Account.get();
@@ -63,9 +56,8 @@ singeletonApp.controller('SettingsController', function ($scope, Account) {
                     }
                 });
         };
-    });
-
-singeletonApp.controller('RegisterController', function ($scope, $translate, Register) {
+    })
+    .controller('RegisterController', function ($scope, $translate, Register) {
         $scope.success = null;
         $scope.error = null;
         $scope.doNotMatch = null;
@@ -97,9 +89,8 @@ singeletonApp.controller('RegisterController', function ($scope, $translate, Reg
                     });
             }
         }
-    });
-
-singeletonApp.controller('ActivationController', function ($scope, $routeParams, Activate) {
+    })
+    .controller('ActivationController', function ($scope, $routeParams, Activate) {
         Activate.get({key: $routeParams.key},
             function (value, responseHeaders) {
                 $scope.error = null;
@@ -109,9 +100,8 @@ singeletonApp.controller('ActivationController', function ($scope, $routeParams,
                 $scope.success = null;
                 $scope.error = "ERROR";
             });
-    });
-
-singeletonApp.controller('PasswordController', function ($scope, Password) {
+    })
+    .controller('PasswordController', function ($scope, Password) {
         $scope.success = null;
         $scope.error = null;
         $scope.doNotMatch = null;
@@ -131,9 +121,8 @@ singeletonApp.controller('PasswordController', function ($scope, Password) {
                     });
             }
         };
-    });
-
-singeletonApp.controller('SessionsController', function ($scope, resolvedSessions, Sessions) {
+    })
+    .controller('SessionsController', function ($scope, resolvedSessions, Sessions) {
         $scope.success = null;
         $scope.error = null;
         $scope.sessions = resolvedSessions;
@@ -149,9 +138,8 @@ singeletonApp.controller('SessionsController', function ($scope, resolvedSession
                     $scope.error = "ERROR";
                 });
         };
-    });
-
- singeletonApp.controller('HealthController', function ($scope, HealthCheckService) {
+    })
+    .controller('HealthController', function ($scope, HealthCheckService) {
      $scope.updatingHealth = true;
 
      $scope.refresh = function() {
@@ -174,13 +162,11 @@ singeletonApp.controller('SessionsController', function ($scope, resolvedSession
              return "label-danger";
          }
      }
- });
-
-singeletonApp.controller('ConfigurationController', function ($scope, resolvedConfiguration) {
+ })
+    .controller('ConfigurationController', function ($scope, resolvedConfiguration) {
     $scope.configuration = resolvedConfiguration;
-});
-
-singeletonApp.controller('MetricsController', function ($scope, MetricsService, HealthCheckService, ThreadDumpService) {
+})
+    .controller('MetricsController', function ($scope, MetricsService, HealthCheckService, ThreadDumpService) {
         $scope.metrics = {};
 		$scope.updatingMetrics = true;
 
@@ -258,9 +244,8 @@ singeletonApp.controller('MetricsController', function ($scope, MetricsService, 
                 return "label-danger";
             }
         };
-    });
-
-singeletonApp.controller('LogsController', function ($scope, resolvedLogs, LogsService) {
+    })
+    .controller('LogsController', function ($scope, resolvedLogs, LogsService) {
         $scope.loggers = resolvedLogs;
 
         $scope.changeLevel = function (name, level) {
@@ -268,9 +253,8 @@ singeletonApp.controller('LogsController', function ($scope, resolvedLogs, LogsS
                 $scope.loggers = LogsService.findAll();
             });
         }
-    });
-
-singeletonApp.controller('AuditsController', function ($scope, $translate, $filter, AuditsService) {
+    })
+    .controller('AuditsController', function ($scope, $translate, $filter, AuditsService) {
         $scope.onChangeDate = function() {
             AuditsService.findByDates($scope.fromDate, $scope.toDate).then(function(data){
                 $scope.audits = data;
