@@ -19,7 +19,6 @@ app.controller('MainController', function ($scope) {
             if ($scope.registerAccount.password != $scope.confirmPassword) {
                 $scope.doNotMatch = "ERROR";
             } else {
-                $scope.registerAccount.langKey = $translate.use();
                 $scope.doNotMatch = null;
                 $scope.success = null;
                 $scope.error = null;
