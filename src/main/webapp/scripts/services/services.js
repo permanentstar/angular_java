@@ -1,5 +1,4 @@
 'use strict';
-
 /* Services */
 angular.module("app.services").factory('LanguageService', function ($http, $translate, LANGUAGES) {
         return {
@@ -40,6 +39,9 @@ angular.module("app.services").factory('LanguageService', function ($http, $tran
     })
     .factory('AuthService', function ($rootScope, $http,$q, Session, Account) {
         return {
+            login:function(){
+
+            },
             promiseAuthor:function(roles){
                 return this.isAuthorized(roles) ? $q.when(true):$q.reject({authenticated:false})
             },
@@ -144,7 +146,6 @@ angular.module("app.services").factory('LanguageService', function ($http, $tran
                 resolve: input
             });
             modalInstance.result.then(function (result) {//receive promise result from ModalInstanceCtrl 'OK'
-                //call http service to update cfg
                 if(callback){
                     callback(result);
                 }

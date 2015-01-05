@@ -54,12 +54,6 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu" ng-controller="MenuController">
-                                <li ng-switch-when="true"><a href="#/settings"><span class="glyphicon glyphicon-wrench"></span>
-                                    &nbsp;<span >Settings</span></a></li>
-                                <li ng-switch-when="true"><a href="#/password"><span class="glyphicon glyphicon-lock"></span>
-                                    &nbsp;<span >Password</span></a></li>
-                                <li ng-switch-when="true"><a href="#/sessions"><span class="glyphicon glyphicon-cloud"></span>
-                                    &nbsp;<span>Sessions</span></a></li>
                                 <li ng-switch-when="true"><a href="#/logout"><span class="glyphicon glyphicon-log-out"></span>
                                     &nbsp;<span >Log out</span></a></li>
                                 <li ng-switch-when="false"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span>
@@ -91,11 +85,12 @@
         <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
         <script src="bower_components/angular-cache-buster/angular-cache-buster.js"></script>
         <script src="bower_components/underscore/underscore.js"></script>
-        <script src="scripts/common.js"></script>
-        <script src="scripts/filters/truncate.js"></script>
-        <script src="scripts/others/utils.js"></script>
+        <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js"></script>
+        <script src="scripts/custom/common.js"></script>
         <script src="scripts/app.js"></script>
-        <script src="scripts/others/constants.js"></script>
+        <script src="scripts/filters/truncate.js"></script>
+        <script src="scripts/utils/utils.js"></script>
+        <script src="scripts/utils/constants.js"></script>
         <script src="scripts/controllers/controllers.js"></script>
         <script src="scripts/services/services.js"></script>
         <script src="scripts/directives/directives.js"></script>

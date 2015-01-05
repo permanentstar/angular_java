@@ -2,8 +2,7 @@
 
 /* App Module */
 angular.module("app.directives", []);
-angular.module("app.services", [/*'ui.bootstrap'*/]);
-/*ui bootstrap 用于模态框*/
+angular.module("app.services", ['ui.bootstrap']);/*ui bootstrap 用于模态框*/
 angular.module("app.filters", []);
 angular.module('app.utils', []);
 var app = angular.module('app', ['ngResource', 'ngRoute', 'ngCookies', "app.services", "app.filters", "app.utils", "app.directives", 'ngCacheBuster']);

@@ -11,10 +11,14 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
         yeoman: {
             // configurable paths
-            app: require('./bower.json').appPath || 'app',
+            app: require('./bower.json').appPath || 'src/main/webapp',
             dist: 'src/main/webapp/dist'
         },
         watch: {
+            bower: {
+                files: ['bower.json'],
+                tasks: ['wiredep']
+            },
             styles: {
                 files: ['src/main/webapp/styles/**/*.css'],
                 tasks: ['copy:styles', 'autoprefixer']
@@ -30,6 +34,13 @@ module.exports = function (grunt) {
                     '{.tmp/,}src/main/webapp/scripts/**/*.js',
                     'src/main/webapp/images/**/*.{png,jpg,jpeg,gif,webp,svg}'
                 ]
+            }
+        },
+        // Automatically inject Bower components into the app
+        wiredep: {//todo:inject fail
+            app: {
+                src: ['<%= yeoman.app %>/index.html'],
+                ignorePath:  /\.\.\//
             }
         },
         autoprefixer: {
@@ -182,8 +193,7 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        // not used since Uglify task does concat,
-        // but still available if needed
+        // not used since useminPrepare task does concat,
         /*concat: {
             dist: {}
         },*/
@@ -233,19 +243,19 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        cssmin: {
+        /*cssmin: {// useminPrepare generated instead
             // By default, your `index.html` <!-- Usemin Block --> will take care of
             // minification. This option is pre-configured if you do not wish to use
             // Usemin blocks.
             // dist: {
             //     files: {
             //         '<%= yeoman.dist %>/styles/main.css': [
-            //             '.tmp/styles/{,*/}*.css',
-            //             'styles/{,*/}*.css'
+            //             '.tmp/styles/{,*//*}*.css',
+            //             'styles/{,*//*}*.css'
             //         ]
             //     }
             // }
-        },
+        },*/
         htmlmin: {
             dist: {
                 options: {
@@ -290,27 +300,15 @@ module.exports = function (grunt) {
                     ]
                 }]
             },
+            concatScript:{
+                dest:'<%= yeoman.dist %>/scripts/scripts_raw.js',
+                src:'.tmp/concat/scripts/scripts.js'
+            },
             styles: {
                 expand: true,
                 cwd: 'src/main/webapp/styles',
                 dest: '.tmp/styles/',
                 src: '{,*/}*.css'
-            },
-            generateHerokuDirectory: {
-                    expand: true,
-                    dest: 'deploy/heroku',
-                    src: [
-                        'pom.xml',
-                        'src/main/**'
-                ]
-            },
-            generateOpenshiftDirectory: {
-                    expand: true,
-                    dest: 'deploy/openshift',
-                    src: [
-                        'pom.xml',
-                        'src/main/**'
-                ]
             }
         },
         concurrent: {
@@ -356,8 +354,8 @@ module.exports = function (grunt) {
                         to: ''
                     }]
                 }
-            },
-        uglify: {
+            }/*,
+        uglify: {//useminPrepare generated instead
             dist: {
                 files: {
                     '<%= yeoman.dist %>/scripts/scripts.js': [
@@ -365,29 +363,7 @@ module.exports = function (grunt) {
                     ]
                 }
             }
-        },
-        buildcontrol: {
-            options: {
-                commit: true,
-                push: false,
-                connectCommits: false,
-                message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
-            },
-            heroku: {
-                options: {
-                    dir: 'deploy/heroku',
-                    remote: 'heroku',
-                    branch: 'master'
-                }
-            },
-            openshift: {
-                options: {
-                    dir: 'deploy/openshift',
-                    remote: 'openshift',
-                    branch: 'master'
-                }
-            }
-        }
+        }*/
     });
 
     grunt.registerTask('server', function (target) {
@@ -397,6 +373,7 @@ module.exports = function (grunt) {
 
         grunt.task.run([
             'clean:server',
+            'wiredep',
             'concurrent:server',
             'autoprefixer',
             'configureProxies',
@@ -425,34 +402,9 @@ module.exports = function (grunt) {
         'replace',
         'uglify',
         'rev',
+        'copy:concatScript',
         'usemin',
         'htmlmin'
-    ]);
-
-    grunt.registerTask('buildHeroku', [
-        'test',
-        'build',
-        'copy:generateHerokuDirectory',
-    ]);
-
-    grunt.registerTask('deployHeroku', [
-        'test',
-        'build',
-        'copy:generateHerokuDirectory',
-        'buildcontrol:heroku'
-    ]);
-
-    grunt.registerTask('buildOpenshift', [
-        'test',
-        'build',
-        'copy:generateOpenshiftDirectory',
-    ]);
-
-    grunt.registerTask('deployOpenshift', [
-        'test',
-        'build',
-        'copy:generateOpenshiftDirectory',
-        'buildcontrol:openshift'
     ]);
 
     grunt.registerTask('default', [
