@@ -1,52 +1,29 @@
 package com.star.permanent.security;
 
-import com.star.permanent.domain.Authority;
-import com.star.permanent.domain.User;
-import com.star.permanent.repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+/*import com.snda.sysdev.security.uam.Assertion;
+import com.snda.sysdev.security.uam.UamRole;
+import com.snda.sysdev.security.uam.authority.ScopedGrantedAuthority;
+import com.snda.sysdev.security.uam.userdetails.AbstractUamAssertionUserDetailsService;
+import com.snda.sysdev.security.uam.userdetails.User;*/
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
-/**
- * Authenticate a user from the database.
- */
-@Component("userDetailsService")
-public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
+public class UserDetailsService/* extends AbstractUamAssertionUserDetailsService*/ {
 
-    private final Logger log = LoggerFactory.getLogger(UserDetailsService.class);
+    /*@Override
+    protected UserDetails loadUserDetails(Assertion assertion) {
+        List<UamRole> roles = assertion.getRoles();
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
-    @Inject
-    private UserRepository userRepository;
-
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(final String login) {
-        log.debug("Authenticating {}", login);
-        String lowercaseLogin = login.toLowerCase();
-
-        User userFromDatabase = userRepository.findOne(lowercaseLogin);
-        if (userFromDatabase == null) {
-            throw new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the database");
-        } else if (!userFromDatabase.getActivated()) {
-            throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
+        for (UamRole role: roles) {
+            String code = role.getCode();
+            String name = role.getName();
+            ScopedGrantedAuthority authority = new ScopedGrantedAuthority(code, name, role.getItemCodes());
+            authorities.add(authority);
         }
-
-        Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        for (Authority authority : userFromDatabase.getAuthorities()) {
-            GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(authority.getName());
-            grantedAuthorities.add(grantedAuthority);
-        }
-
-        return new org.springframework.security.core.userdetails.User(lowercaseLogin, userFromDatabase.getPassword(),
-                grantedAuthorities);
-    }
+        return new User(assertion.getAccountInfo(), authorities);
+    }*/
 }
