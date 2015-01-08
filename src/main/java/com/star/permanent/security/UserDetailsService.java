@@ -1,29 +1,52 @@
 package com.star.permanent.security;
 
-/*import com.snda.sysdev.security.uam.Assertion;
-import com.snda.sysdev.security.uam.UamRole;
-import com.snda.sysdev.security.uam.authority.ScopedGrantedAuthority;
-import com.snda.sysdev.security.uam.userdetails.AbstractUamAssertionUserDetailsService;
-import com.snda.sysdev.security.uam.userdetails.User;*/
+import com.star.permanent.domain.Authority;
+import com.star.permanent.domain.User;
+import com.star.permanent.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
-public class UserDetailsService/* extends AbstractUamAssertionUserDetailsService*/ {
+/**
+ * Authenticate a user from the database.
+ */
+@Component("userDetailsService")
+public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
-    /*@Override
-    protected UserDetails loadUserDetails(Assertion assertion) {
-        List<UamRole> roles = assertion.getRoles();
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+    private final Logger log = LoggerFactory.getLogger(UserDetailsService.class);
 
-        for (UamRole role: roles) {
-            String code = role.getCode();
-            String name = role.getName();
-            ScopedGrantedAuthority authority = new ScopedGrantedAuthority(code, name, role.getItemCodes());
-            authorities.add(authority);
+    @Inject
+    private UserRepository userRepository;
+
+    @Override
+    @Transactional
+    public UserDetails loadUserByUsername(final String login) {
+        log.debug("Authenticating {}", login);
+        String lowercaseLogin = login.toLowerCase();
+
+        User userFromDatabase = userRepository.findOne(lowercaseLogin);
+        if (userFromDatabase == null) {
+            throw new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the database");
+        } else if (!userFromDatabase.getActivated()) {
+            throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
         }
-        return new User(assertion.getAccountInfo(), authorities);
-    }*/
+
+        Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        for (Authority authority : userFromDatabase.getAuthorities()) {
+            GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(authority.getName());
+            grantedAuthorities.add(grantedAuthority);
+        }
+
+        return new org.springframework.security.core.userdetails.User(lowercaseLogin, userFromDatabase.getPassword(),
+                grantedAuthorities);
+    }
 }
