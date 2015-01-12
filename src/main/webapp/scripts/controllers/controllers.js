@@ -2,11 +2,17 @@
 
 /* Controllers */
 
-app.controller('MainController', function ($scope) {
+app.controller('MainController', function ($scope,$resource) {
+        $scope.btn_click = function(){
+            $resource('/rest/user').query({page:1,pageCount:4},function(data,getResponseHeaders){
+                //console.log([data,getResponseHeaders]);
+                var header = getResponseHeaders();
+                data.total = header.total;
+                console.log([data,data.length]);
+            });
+        }
     })
-    .controller('MenuController',function($scope){
-
-    })
+    .controller("MenuController",function(){})
     .controller('LoginController', function ($scope, AuthService) {
         $scope.rememberMe = true;
         $scope.login = function () {
