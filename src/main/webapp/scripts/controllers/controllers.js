@@ -4,6 +4,9 @@
 
 app.controller('MainController', function ($scope) {
     })
+    .controller('MenuController',function($scope){
+
+    })
     .controller('LoginController', function ($scope, AuthService) {
         $scope.rememberMe = true;
         $scope.login = function () {

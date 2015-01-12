@@ -1,99 +1,20 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>singeleton</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <!-- build:css(.tmp) styles/main.css -->
-        <link rel="stylesheet" href="styles/main.css">
-        <!-- endbuild -->
-    </head>
-    <body ng-app="app" ng-controller="MainController">
-        <!--[if lt IE 10]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        <div class="development"></div>
-        <nav class="navbar navbar-default" role="navigation">
-            <div class="container">
-                <div class="collapse navbar-collapse" id="navbar-collapse" ng-switch="1==1">
-                    <ul class="nav navbar-nav nav-pills navbar-right">
-                        <li>
-                            <a href="#">
-                                <span class="glyphicon glyphicon-home"></span>
-                                <span>Home</span>
-                            </a>
-                        </li>
-                        <li ng-switch-when="true" class="dropdown pointer">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="">
-                                <span>
-                                    <span class="glyphicon glyphicon-th-list"></span>
-                                    <span class="hidden-tablet">
-                                        Entities
-                                    </span>
-                                    <b class="caret"></b>
-                                </span>
-                            </a>
-                            <ul class="dropdown-menu" ng-controller="MenuController">
-                                <!-- JHipster will add entities to the menu here -->
-                            </ul>
-                        </li>
-                        <li class="dropdown pointer">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="">
-                                <span>
-                                    <span class="glyphicon glyphicon-user"></span>
-                                    <span class="hidden-tablet">
-                                        Account
-                                    </span>
-                                    <b class="caret"></b>
-                                </span>
-                            </a>
-                            <ul class="dropdown-menu" ng-controller="MenuController">
-                                <li ng-switch-when="true"><a href="#/logout"><span class="glyphicon glyphicon-log-out"></span>
-                                    &nbsp;<span >Log out</span></a></li>
-                                <li ng-switch-when="false"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span>
-                                    &nbsp;<span>Authenticate</span></a></li>
-
-                                <li ng-switch-when="false"><a href="#/register"><span class="glyphicon glyphicon-plus-sign"></span>
-                                    &nbsp;<span>Register</span></a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <div class="container">
-            <div class="well" ng-view=""></div>
-
-            <div class="footer">
-                <p>This is your footer</p>
-            </div>
-        </div>
-
-        <!-- build:js scripts/scripts.js -->
-        <script src="bower_components/modernizr/modernizr.js"></script>
-        <script src="bower_components/jquery/dist/jquery.js"></script>
-        <script src="bower_components/angular/angular.js"></script>
-        <script src="bower_components/angular-route/angular-route.js"></script>
-        <script src="bower_components/angular-resource/angular-resource.js"></script>
-        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-        <script src="bower_components/angular-cache-buster/angular-cache-buster.js"></script>
-        <script src="bower_components/underscore/underscore.js"></script>
-        <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js"></script>
-        <script src="scripts/custom/common.js"></script>
-        <script src="scripts/app.js"></script>
-        <script src="scripts/filters/truncate.js"></script>
-        <script src="scripts/utils/utils.js"></script>
-        <script src="scripts/utils/constants.js"></script>
-        <script src="scripts/controllers/controllers.js"></script>
-        <script src="scripts/services/services.js"></script>
-        <script src="scripts/directives/directives.js"></script>
-        <!-- endbuild -->
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <title>singeleton</title>
+    <#assign ctx = request.contextPath/>
+    <script>
+        var ctx = "${ctx}";
+    </script>
+</head>
+<body>
+    <#include "app.html"/>
 </body>
 </html>

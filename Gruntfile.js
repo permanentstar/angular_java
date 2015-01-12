@@ -39,7 +39,7 @@ module.exports = function (grunt) {
         // Automatically inject Bower components into the app
         wiredep: {//todo:inject fail
             app: {
-                src: ['<%= yeoman.app %>/index.html'],
+                src: ['<%= yeoman.app %>/app.html'],
                 ignorePath:  /\.\.\//
             }
         },
@@ -228,7 +228,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: 'src/main/webapp/images',
-                src: '**/*.{jpg,jpeg}', // we don't optimize PNG files as it doesn't work on Linux. If you are not on Linux, feel free to use '{,*/}*.{png,jpg,jpeg}'
+                    src: '**/*.{jpg,jpeg}', // we don't optimize PNG files as it doesn't work on Linux. If you are not on Linux, feel free to use '{,*/}*.{png,jpg,jpeg}'
                     dest: '<%= yeoman.dist %>/images'
                 }]
             }
@@ -244,7 +244,7 @@ module.exports = function (grunt) {
             }
         },
         /*cssmin: {// useminPrepare generated instead
-            // By default, your `index.html` <!-- Usemin Block --> will take care of
+            // By default, your `app.html` <!-- Usemin Block --> will take care of
             // minification. This option is pre-configured if you do not wish to use
             // Usemin blocks.
             // dist: {
@@ -272,7 +272,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= yeoman.dist %>',
-                    src: ['*.html', 'views/**/*.html'],
+                    src: ['app.html', 'views/**/*.html'],
                     dest: '<%= yeoman.dist %>'
                 }]
             }
@@ -330,11 +330,11 @@ module.exports = function (grunt) {
                 singleRun: true
             }
         },
-        cdnify: {
+        /*cdnify: {
             dist: {
-                html: ['<%= yeoman.dist %>/*.html']
+                html: ['<%= yeoman.dist %>*//*.html']
             }
-        },
+        },*/
         ngAnnotate: {
             dist: {
                 files: [{
@@ -344,17 +344,17 @@ module.exports = function (grunt) {
                     dest: '.tmp/concat/scripts'
                 }]
             }
-        },
-        replace: {
+        }/*,
+        replace: {          //replace match block to another ex. remove develop block
             dist: {
-                src: ['<%= yeoman.dist %>/index.html'],
+                src: ['<%= yeoman.dist %>/app.html'],
                     overwrite: true,                                 // overwrite matched source files
                     replacements: [{
                         from: '<div class="development"></div>',
                         to: ''
                     }]
                 }
-            }/*,
+            },
         uglify: {//useminPrepare generated instead
             dist: {
                 files: {
@@ -399,10 +399,10 @@ module.exports = function (grunt) {
         'copy:dist',
         'ngAnnotate',
         'cssmin',
-        'replace',
+        //'replace',
         'uglify',
         'rev',
-        'copy:concatScript',
+        //'copy:concatScript',
         'usemin',
         'htmlmin'
     ]);

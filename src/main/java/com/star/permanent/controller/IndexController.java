@@ -12,6 +12,6 @@ import java.security.Principal;
 public class IndexController {
     @RequestMapping("/")
     public String index(Principal principal){
-        return "forward:/index.html";
+        return "index";
     }
 }
