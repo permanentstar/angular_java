@@ -2,12 +2,12 @@
 
 /* App Module */
 angular.module("app.directives", []);
-angular.module("app.services", ['ui.bootstrap']);/*ui bootstrap 用于模态框*/
+angular.module("app.services", ['ui.bootstrap','restangular']);/*ui bootstrap 用于模态框*/
 angular.module("app.filters", []);
 angular.module('app.utils', []);
 var app = angular.module('app', ['ngResource', 'ngRoute', 'ngCookies', "app.services", "app.filters", "app.utils", "app.directives", 'ngCacheBuster']);
 
-app.config(function ($routeProvider, $httpProvider, httpRequestInterceptorCacheBusterProvider, USER_ROLES, CONTENT_TYPE) {
+app.config(function ($routeProvider, $httpProvider, httpRequestInterceptorCacheBusterProvider, USER_ROLES, CONTENT_TYPE,RestangularProvider) {
 
     //Cache everything except rest api requests
     //httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*rest.*/],true);//默认black=false  白名单为不刷新缓存的 黑名单则为需要刷新缓存的
@@ -59,7 +59,22 @@ app.config(function ($routeProvider, $httpProvider, httpRequestInterceptorCacheB
             }
         });
 
-    $httpProvider.defaults.transformRequest = function (data, headersGetter) {     //transformRequest默认为array transformRequest[0]为将object $.params=>url encoded 此处直接替换为stringify
+    /*use restangular restful*/
+    //RestangularProvider.setBaseUrl();
+    RestangularProvider.addResponseInterceptor(function(data, operation, what, url, response, deferred) {
+        var extractedData;
+        // .. to look for getList operations
+        if (operation === "getList") {
+            // .. and handle the data and meta data
+            extractedData = data.data.data;
+            extractedData.meta = data.data.meta;
+        } else {
+            extractedData = data.data;
+        }
+        return extractedData;
+    });
+
+    /*$httpProvider.defaults.transformRequest = function (data, headersGetter) {     //transformRequest默认为array transformRequest[0]为将object $.params=>url encoded 此处直接替换为stringify
         var header = headersGetter();
         var contentType = header['Content-Type'];
         var rtData;
@@ -103,7 +118,7 @@ app.config(function ($routeProvider, $httpProvider, httpRequestInterceptorCacheB
         }
 
         return query.length ? query.substr(0, query.length - 1) : query;
-    };
+    };*/
 })
     .provider('securityInterceptor', function () {
         this.$get = function ($location, $q) {

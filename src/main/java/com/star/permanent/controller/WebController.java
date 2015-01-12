@@ -18,10 +18,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/rest")
 public class WebController {
-    @RequestMapping("/user")
-    public ResponseEntity<List<UserInfo>> getUserList(@RequestParam Integer page,
+    @RequestMapping("/users")
+    public ResponseEntity<List<UserInfo>> getUserList(@RequestParam(required = false) Integer page,
                                                       @RequestParam(required = false) Integer prev,
-                                                      @RequestParam Integer pageCount){
+                                                      @RequestParam(required = false) Integer pageCount){
         List<UserInfo> userInfoList = new ArrayList<UserInfo>();
         userInfoList.add(new UserInfo("s1","b1",21, Arrays.asList(new String[]{"admin","user"})));
         userInfoList.add(new UserInfo("s2","b2",22, Arrays.asList(new String[]{"user"})));
