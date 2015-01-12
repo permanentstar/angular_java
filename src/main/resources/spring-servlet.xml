@@ -8,4 +8,6 @@
     <mvc:resources mapping="/images/**" location="/images/"/>
     <mvc:resources mapping="/fonts/**" location="/fonts/"/>
     <mvc:resources mapping="/index.html" location="/index.html"/>
+    <mvc:resources mapping="/scripts/**" location="/scripts/"/>
+    <mvc:resources mapping="/bower_components/**" location="/bower_components/"/>
 </beans>
