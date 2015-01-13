@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/rest")
 public class WebController {
-    @RequestMapping("/users")
+    @RequestMapping(value = "/user",method = RequestMethod.GET)
     public ResponseEntity<List<UserInfo>> getUserList(@RequestParam(required = false) Integer page,
                                                       @RequestParam(required = false) Integer prev,
                                                       @RequestParam(required = false) Integer pageCount){
@@ -30,6 +31,7 @@ public class WebController {
         headers.set("total","3");
         headers.set("page",String.valueOf(page));
         headers.set("pageCount",String.valueOf(pageCount));
+        //throw new RuntimeException("error");
         return new ResponseEntity<List<UserInfo>>(userInfoList,headers, HttpStatus.OK);
     }
 }

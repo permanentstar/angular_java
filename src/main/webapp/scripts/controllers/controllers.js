@@ -2,16 +2,11 @@
 
 /* Controllers */
 
-app.controller('MainController', function ($scope,$resource,Users) {
+app.controller('MainController', function ($scope,$resource,User) {
         $scope.btn_click = function(){
-            $resource(ctx+'/rest/users').query({page:1,pageCount:4},function(data,getResponseHeaders){
-                //console.log([data,getResponseHeaders]);
-                var header = getResponseHeaders();
-                data.total = header.total;
-                console.log([data,data.length]);
+            var userList = User.query(function(data,header){
+                console.log([data,header]);
             });
-            /*var promise = Users.getList({page:1,pageCount:5}).$object;
-            console.log(promise);*/
         }
     })
     .controller("MenuController",function(){})

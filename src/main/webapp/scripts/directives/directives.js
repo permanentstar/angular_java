@@ -234,4 +234,7 @@ angular.module("app.directives")
             }
         }
     })
+    .directive('select',function(){
+
+    })
 ;

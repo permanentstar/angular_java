@@ -1,22 +1,6 @@
 'use strict';
 /* Services */
-angular.module("app.services").factory('LanguageService', function ($http, $translate, LANGUAGES) {
-        return {
-            getBy: function(language) {
-                if (language == undefined) {
-                    language = $translate.storage().get('NG_TRANSLATE_LANG_KEY');
-                }
-                if (language == undefined) {
-                    language = 'en';
-                }
-
-                var promise =  $http.get('i18n/' + language + '.json').then(function(response) {
-                    return LANGUAGES;
-                });
-                return promise;
-            }
-        };
-    })
+angular.module("app.services")
     .factory('Session', function () {
         this.create = function (login, firstName, lastName, email, userRoles) {
             this.login = login;
@@ -82,58 +66,6 @@ angular.module("app.services").factory('LanguageService', function ($http, $tran
             }
         };
     })
-    .factory('HttpConnector',function($http,CONTENT_TYPE){
-        return {
-            postData:simpleHttpPost
-        };
-        function simpleHttpPost(url,requestData,contentType,urlParams,success, error) {
-            var httpContentType;
-            if(contentType){
-                httpContentType = contentType;
-            }else{
-                httpContentType = CONTENT_TYPE.form;
-            }
-            return $http.post(url,requestData , {params: urlParams, headers: {'Content-Type': httpContentType}})
-                .success(function (data, status, headers, config) {
-                        if (success) {
-                            success(data, status, headers, config);
-                        }
-                }).error(function (data, status, headers, config) {
-                    if(error){
-                        error(data,status,headers,config);
-                    }
-                })
-        }
-    })
-    .factory('PromiseService',function($q){
-        return {
-            httpDataResolve:httpDataResolve,
-            httpPaginResolve:httpPaginResolve
-        };
-        function httpDataResolve(httpPromise){
-            return $q.when(httpPromise).then(function (httpPromise) {
-                if (httpPromise && httpPromise.status === 200) {
-                    return httpPromise.data;
-                }
-                return null;
-            })
-        }
-        function httpPaginResolve(httpPromise) {
-            return $q.when(httpPromise).then(function (httpPromise) {
-                if (httpPromise && httpPromise.status === 200) {
-                    var ajaxResult = httpPromise.data;
-                    if (ajaxResult.success) {
-                        return {totalCount: ajaxResult.totalCount, list: ajaxResult.data};
-                    } else {
-                        alert(ajaxResult.data);
-                    }
-                } else {
-                    alert("http connect fail");
-                }
-                return null;
-            })
-        }
-    })
     .factory('ModalWinService',['$modal',function($modal){
         return {
             modalWin:modalWin
@@ -185,3 +117,4 @@ angular.module("app.services").factory('LanguageService', function ($http, $tran
             return valid;
         }
     })
+;
