@@ -57,67 +57,27 @@ module.exports = function (grunt) {
         connect: {
             proxies: [
                 {
-                    context: '/app',// 这是你希望出现在grunt serve服务中的路径
+                    context: '/<%= pkg.name %>',// 这是你希望出现在grunt serve服务中的路径
                     host: 'localhost',// 远端服务器
-                    port: 9999,// 远端服务器端口
+                    port: '<%= pkg.server_port %>',// 远端服务器端口
                     https: false,
                     changeOrigin: false/*,
                     rewrite: {
-                        '^/app': '/app'  // 地址映射策略，从context开始算，把前后地址做正则替换，如果远端路径和context相同则不用配置。
+                        '^/singeleton': '/singeleton'  // 地址映射策略，从context开始算，把前后地址做正则替换，如果远端路径和context相同则不用配置。
                     }*/
-                },
-                {
-                    context: '/metrics',
-                    host: 'localhost',
-                    port: 9999,
-                    https: false,
-                    changeOrigin: false
-                },
-                {
-                    context: '/dump',
-                    host: 'localhost',
-                    port: 9999,
-                    https: false,
-                    changeOrigin: false
-                },
-                {
-                    context: '/health',
-                    host: 'localhost',
-                    port: 9999,
-                    https: false,
-                    changeOrigin: false
-                },
-                {
-                    context: '/configprops',
-                    host: 'localhost',
-                    port: 9999,
-                    https: false,
-                    changeOrigin: false
-                },
-                {
-                    context: '/beans',
-                    host: 'localhost',
-                    port: 9999,
-                    https: false,
-                    changeOrigin: false
-                },
-                {
-                    context: '/api-docs',
-                    host: 'localhost',
-                    port: 9999,
-                    https: false,
-                    changeOrigin: false
                 }
             ],
             options: {
-                port: 9000,
+                port:  '<%= pkg.front_port %>',//前端访问端口
                 // Change this to 'localhost' to deny access to the server from outside.
                 hostname: 'localhost',
                 livereload: 35729
             },
             livereload: {
                 options: {
-                    open: true,
+                    open: {
+                        target: 'http://<%= connect.options.hostname %>:<%= pkg.front_port %>/<%= pkg.name %>' // target url to open
+                    },
                     base: [
                         '.tmp',
                         'src/main/webapp'
@@ -133,7 +93,10 @@ module.exports = function (grunt) {
             },
             test: {
                 options: {
-                 port: 9001,
+                    port: 9001,
+                    open: {
+                        target: 'http://<%= connect.options.hostname %:9001/<%= pkg.name %>' // target url to open
+                    },
                     base: [
                         '.tmp',
                         'test',
@@ -143,6 +106,10 @@ module.exports = function (grunt) {
             },
             dist: {
                 options: {
+                    port:  '<%= pkg.front_port %>',//前端访问端口
+                    open: {
+                        target: 'http://<%= connect.options.hostname %>:<%= pkg.server_port %>/<%= pkg.name %>' // target url to open
+                    },
                     base: '<%= yeoman.dist %>'
                 }
             }
@@ -188,7 +155,7 @@ module.exports = function (grunt) {
             }
         },
         useminPrepare: {
-            html: 'src/main/webapp/**/*.html',
+            html: ['src/main/webapp/views/**/*.html','src/main/webapp/app.html'],
             options: {
                 dest: '<%= yeoman.dist %>'
             }
@@ -370,7 +337,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean:dist',
-        'useminPrepare',
+        'useminPrepare'/*,
         'concurrent:dist',
         'autoprefixer',
         'concat',
@@ -382,7 +349,7 @@ module.exports = function (grunt) {
         'rev',
         //'copy:concatScript',
         'usemin',
-        'htmlmin'
+        'htmlmin'*/
     ]);
 
     grunt.registerTask('default', [
