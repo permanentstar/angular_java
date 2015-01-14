@@ -95,7 +95,7 @@ module.exports = function (grunt) {
                 options: {
                     port: 9001,
                     open: {
-                        target: 'http://<%= connect.options.hostname %:9001/<%= pkg.name %>' // target url to open
+                        target: 'http://<%= connect.options.hostname %>:9001/<%= pkg.name %>' // target url to open
                     },
                     base: [
                         '.tmp',
@@ -155,7 +155,7 @@ module.exports = function (grunt) {
             }
         },
         useminPrepare: {
-            html: ['src/main/webapp/views/**/*.html','src/main/webapp/app.html'],
+            html: ['src/main/webapp/**/*.html'],
             options: {
                 dest: '<%= yeoman.dist %>'
             }
@@ -337,7 +337,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean:dist',
-        'useminPrepare'/*,
+        'useminPrepare',
         'concurrent:dist',
         'autoprefixer',
         'concat',
@@ -349,7 +349,7 @@ module.exports = function (grunt) {
         'rev',
         //'copy:concatScript',
         'usemin',
-        'htmlmin'*/
+        'htmlmin'
     ]);
 
     grunt.registerTask('default', [
