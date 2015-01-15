@@ -3,11 +3,13 @@
 /* Controllers */
 
 app.controller('MainController', function ($scope,$resource,User) {
-        $scope.btn_click = function(){
-            var userList = User.query(function(data,header){
-                console.log([data,header]);
-            });
-        }
+        $scope.options = [
+            {id:1,text:"op1"},
+            {id:2,text:"op2"},
+            {id:3,text:"op3"},
+            {id:4,text:"op4"},
+            {id:5,text:"op5"}
+        ];
     })
     .controller("MenuController",function(){})
     .controller('LoginController', function ($scope, AuthService) {

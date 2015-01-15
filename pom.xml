@@ -160,28 +160,52 @@
                     <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>com.github.trecloux</groupId>
-                <artifactId>yeoman-maven-plugin</artifactId>
-                <version>0.2</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <yeomanProjectDirectory>${project.basedir}</yeomanProjectDirectory>
-                    <skipTests>true</skipTests>
-                    <!--<npmInstallArgs>arg1</npmInstallArgs>
-                    <bowerInstallArgs>arg2</bowerInstallArgs>
-                    <gruntTestArgs>arg3</gruntTestArgs>
-                    <gruntBuildArgs>arg4</gruntBuildArgs>-->
-                </configuration>
-            </plugin>
+
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profiles.activation>dev</profiles.activation>
+                <logback.loglevel>DEBUG</logback.loglevel>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.trecloux</groupId>
+                        <artifactId>yeoman-maven-plugin</artifactId>
+                        <version>0.2</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <yeomanProjectDirectory>${project.basedir}</yeomanProjectDirectory>
+                            <skipTests>true</skipTests>
+                            <!--<npmInstallArgs>arg1</npmInstallArgs>
+                            <bowerInstallArgs>arg2</bowerInstallArgs>
+                            <gruntTestArgs>arg3</gruntTestArgs>
+                            <gruntBuildArgs>arg4</gruntBuildArgs>-->
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <profiles.activation>prod</profiles.activation>
+                <logback.loglevel>INFO</logback.loglevel>
+            </properties>
+        </profile>
+    </profiles>
 
     <repositories>
         <repository>

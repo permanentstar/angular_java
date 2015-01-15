@@ -34,4 +34,9 @@ public class WebController {
         //throw new RuntimeException("error");
         return new ResponseEntity<List<UserInfo>>(userInfoList,headers, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/auth",method = RequestMethod.GET)
+    public ResponseEntity<UserInfo> getAuth(){
+        return new ResponseEntity<UserInfo>(new UserInfo("login","nickName",25,Arrays.asList(new String[]{"admin","user"})),HttpStatus.OK);
+    }
 }

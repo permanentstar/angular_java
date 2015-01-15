@@ -106,73 +106,9 @@ angular.module("app.directives")
             }
         };
     })
-    .directive('doubleList',function(){
-        return {
-            restrict: 'EA',
-            //replace:true,
-            templateUrl:'template/filterList.ftl',
-            scope: {
-                left:'=leftList',
-                right:'=rightList'
-            },
-            link: function (scope, element, attrs) {
-                //console.log(scope.$parent.left);
-                var me = scope;
-                me.activeLeft = function($index){
-                    angular.forEach(me.right,function(point){
-                        point._active = false;
-                    });
-                    me.left[$index]._active = !me.left[$index]._active;
-                };
-                me.activeRight = function($index){
-                    angular.forEach(me.left,function(point){
-                        point._active = false;
-                    });
-                    me.right[$index]._active = !me.right[$index]._active;
-                };
-                me.moveRightAll = function(){
-                    me.right = me.right.concat(me.left);
-                    me.left = [];
-                    angular.forEach(me.right,function(point){
-                        point._active = false;
-                    });
-                };
-                me.moveLeftAll = function(){
-                    me.left = me.left.concat(me.right);
-                    me.right = [];
-                    angular.forEach(me.left,function(point){
-                        point._active = false;
-                    });
-                };
-                me.moveRight = function(){
-                    var point;
-                    for(var index = me.left.length-1;index >= 0;index --){
-                        point = me.left[index];
-                        if(point._active){
-                            point._active = !point._active;
-                            me.left.splice(index,1);
-                            me.right.push(point);
-                        }
-                    }
-                };
-                me.moveLeft = function(){
-                    var point;
-                    for(var index = me.right.length-1;index >= 0;index --){
-                        point = me.right[index];
-                        if(point._active){
-                            point._active = !point._active;
-                            me.right.splice(index,1);
-                            me.left.push(point);
-                        }
-                    }
-                };
-            }
-        }
-    })
     .directive('ngPagination',function(){
         return {
             restrict:'EA',
-            require: '?ngModel',
             template:'<ul class="pagebar">' +
             '<li class="first" ng-show="pageCurrent != 1"><a ng-click="setFirstPage()"><i></i></a></li>' +
             '<li class="prev" ng-show="pageCurrent != 1"><a ng-click="setPreviousPage()"><i></i></a></li>' +
@@ -186,7 +122,7 @@ angular.module("app.directives")
                 pageTotal:'=',
                 setPage:'&'
             },
-            link:function(scope,element,attrs,ngModel){
+            link:function(scope,element,attrs){
                 var me = scope;
                 if(!me.pageMaxShow || me.pageMaxShow <= 0){
                     me.pageMaxShow = 5;
@@ -234,7 +170,31 @@ angular.module("app.directives")
             }
         }
     })
-    .directive('select',function(){
-
+    .directive('selectDropDown',function(){
+        return {
+            restrict:'EA',
+            templateUrl:'partials/selectDropDown.html',
+            scope:{
+                options:'='
+            },
+            require:'?ngModel',
+            link:function(scope,element,attrs,ngModel){
+                var me = scope;
+                me.select = function($index){
+                    me.selected = me.options[$index];
+                    me.$apply(function(){
+                        ngModel.$setViewValue(me.options[$index]);
+                    });
+                };
+                ngModel.$render = function(){
+                    me.selected = ngModel.$viewValue;
+                };
+                element.mouseover(function(){
+                    element.find(".dropdown-menu").slideDown(500);
+                }).mouseleave(function(){
+                    element.find(".dropdown-menu").slideUp(500);
+                });
+            }
+        }
     })
 ;

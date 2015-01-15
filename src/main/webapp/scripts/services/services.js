@@ -2,24 +2,22 @@
 /* Services */
 angular.module("app.services")
     .factory('Session', function () {
-        this.create = function (login, firstName, lastName, email, userRoles) {
+        this.create = function (login,nickName, email, userRoles) {
             this.login = login;
-            this.firstName = firstName;
-            this.lastName = lastName;
+            this.nickName = nickName;
             this.email = email;
             this.userRoles = userRoles;
         };
         this.invalidate = function () {
             this.login = null;
-            this.firstName = null;
-            this.lastName = null;
+            this.nickName = null;
             this.email = null;
             this.userRoles = null;
         };
         return this;
     })
     .factory('Account', function ($resource) {
-        return $resource('app/rest/account', {}, {});
+        return $resource('rest/auth', {}, {});
     })
     .factory('AuthService', function ($rootScope, $http,$q, Session, Account) {
         return {
@@ -30,15 +28,16 @@ angular.module("app.services")
                 return this.isAuthorized(roles) ? $q.when(true):$q.reject({authenticated:false})
             },
             isAuthorized: function (authorizedRoles) {
+                var me = this;
                 if(!Session.login){//前台未登陆 有可能前台权限未初始化 需要和后台同步一下
                     return Account.get().$promise.then(function(data) {
-                        Session.create(data.login, data.firstName, data.lastName, data.email, data.roles);
+                        Session.create(data.login, data.nickName, data.email, data.roles);
                         $rootScope.account = Session;
                         //$rootScope.$broadcast('event:auth-loginConfirmed');
-                        return this.hasPermission(authorizedRoles);
+                        return me.hasPermission(authorizedRoles);
                     });
                 }else{
-                    return this.hasPermission(authorizedRoles);
+                    return me.hasPermission(authorizedRoles);
                 }
             },
             hasPermission:function(authorizedRoles){

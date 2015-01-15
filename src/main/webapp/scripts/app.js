@@ -9,8 +9,9 @@ var app = angular.module('app', ['ngResource', 'ngRoute', 'ngCookies', "app.serv
 
 app.config(function ($provide,$routeProvider, $httpProvider, httpRequestInterceptorCacheBusterProvider, USER_ROLES) {
 
-    //Cache everything except rest api requests 默认black=false  白名单为不刷新缓存的 黑名单则为需要刷新缓存的
-    httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*views.*/,/.*.styles*/,/.*.images*/,/.*.fonts*/,/.*.scripts*/],false);
+    //Cache everything except rest api requests 默认black=false matchlist=[[/.*partials.*/, /.*views.*/ ]  白名单为不刷新缓存的 黑名单则为需要刷新缓存的
+    //本应用router view在 views/下 directive的template在partials/下 因此无需设置
+    //httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*partials.*/,/.*views.*/],false);
     $httpProvider.interceptors.push(function($q) {
         return {
             /*'request': function(config) {

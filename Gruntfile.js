@@ -37,7 +37,7 @@ module.exports = function (grunt) {
             }
         },
         // Automatically inject Bower components into the app
-        wiredep: {//todo:inject fail
+        wiredep: {
             app: {
                 src: ['<%= yeoman.app %>/app.html'],
                 ignorePath:  /\.\.\//
