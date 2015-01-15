@@ -95,7 +95,7 @@ module.exports = function (grunt) {
                 options: {
                     port: 9001,
                     open: {
-                        target: 'http://<%= connect.options.hostname %>:9001/<%= pkg.name %>' // target url to open
+                        target: 'http://<%= connect.options.hostname %>:<%= pkg.server_port %>/<%= pkg.name %>' // target url to open
                     },
                     base: [
                         '.tmp',
@@ -138,10 +138,6 @@ module.exports = function (grunt) {
             ]
         },
 
-        // not used since useminPrepare task does concat,
-        /*concat: {
-            dist: {}
-        },*/
         rev: {
             dist: {
                 files: {
@@ -173,39 +169,15 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: 'src/main/webapp/images',
-                    src: '**/*.{jpg,jpeg}', // we don't optimize PNG files as it doesn't work on Linux. If you are not on Linux, feel free to use '{,*/}*.{png,jpg,jpeg}'
+                    src: '**/*.{png,jpg,jpeg}', // we don't optimize PNG files as it doesn't work on Linux. If you are not on Linux, feel free to use '{,*/}*.{png,jpg,jpeg}'
                     dest: '<%= yeoman.dist %>/images'
                 }]
             }
         },
-        svgmin: {
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: 'src/main/webapp/images',
-                    src: '**/*.svg',
-                    dest: '<%= yeoman.dist %>/images'
-                }]
-            }
-        },
-        /*cssmin: {// useminPrepare generated instead
-            // By default, your `app.html` <!-- Usemin Block --> will take care of
-            // minification. This option is pre-configured if you do not wish to use
-            // Usemin blocks.
-            // dist: {
-            //     files: {
-            //         '<%= yeoman.dist %>/styles/main.css': [
-            //             '.tmp/styles/{,*//*}*.css',
-            //             'styles/{,*//*}*.css'
-            //         ]
-            //     }
-            // }
-        },*/
         htmlmin: {
             dist: {
                 options: {
                     removeCommentsFromCDATA: true,
-                    // https://github.com/yeoman/grunt-usemin/issues/44
                     collapseWhitespace: true,
                     collapseBooleanAttributes: true,
                     conservativeCollapse: true,
@@ -222,7 +194,6 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        // Put files not handled in other tasks here
         copy: {
             dist: {
                 files: [{
@@ -265,8 +236,7 @@ module.exports = function (grunt) {
             ],
             dist: [
                 'copy:styles',
-                'imagemin',
-                'svgmin'
+                'imagemin'
             ]
         },
         karma: {
@@ -275,11 +245,6 @@ module.exports = function (grunt) {
                 singleRun: true
             }
         },
-        /*cdnify: {
-            dist: {
-                html: ['<%= yeoman.dist %>*//*.html']
-            }
-        },*/
         ngAnnotate: {
             dist: {
                 files: [{
@@ -289,18 +254,10 @@ module.exports = function (grunt) {
                     dest: '.tmp/concat/scripts'
                 }]
             }
-        }/*,
-        replace: {          //replace match block to another ex. remove develop block
-            dist: {
-                src: ['<%= yeoman.dist %>/app.html'],
-                    overwrite: true,                                 // overwrite matched source files
-                    replacements: [{
-                        from: '<div class="development"></div>',
-                        to: ''
-                    }]
-                }
-            },
-        uglify: {//useminPrepare generated instead
+        }
+        /*,
+         //followings are instead by tasks which useminPrepare generated
+        uglify: {
             dist: {
                 files: {
                     '<%= yeoman.dist %>/scripts/scripts.js': [
@@ -308,6 +265,19 @@ module.exports = function (grunt) {
                     ]
                 }
             }
+        },
+        cssmin: {
+            dist: {
+                files: {
+                    '<%= yeoman.dist %>/styles/main.css': [
+                        '.tmp/styles/{,}*.css',
+                        'styles/{,}*.css'
+                    ]
+                }
+            }
+        },
+        concat: {
+            dist: {}
         }*/
     });
 
@@ -344,7 +314,6 @@ module.exports = function (grunt) {
         'copy:dist',
         'ngAnnotate',
         'cssmin',
-        //'replace',
         'uglify',
         'rev',
         //'copy:concatScript',

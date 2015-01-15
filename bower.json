@@ -1,11 +1,9 @@
 {
   "name": "singeleton",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "dependencies": {
     "modernizr": "2.7.1",
-    "jquery": "2.1.1",
     "angular": "1.2.26",
-    "json3": "3.3.2",
     "angular-route": "1.2.26",
     "angular-resource": "1.2.26",
     "angular-cookies": "1.2.26",
