@@ -10,6 +10,13 @@ app.controller('MainController', function ($scope,$resource,User) {
             {id:4,text:"op4"},
             {id:5,text:"op5"}
         ];
+    $scope.selected = $scope.options[0];
+    $scope.viewNav = [
+        {href:'logout',class:'glyphicon-log-out',text:'Log out'},
+        {href:'login',class:'glyphicon-log-in',text:'Authenticate'},
+        {href:'register',class:'glyphicon-plus-sign',text:'Register'}
+    ];
+    $scope.viewNav.title='Auth';
     })
     .controller("MenuController",function(){})
     .controller('LoginController', function ($scope, AuthService) {

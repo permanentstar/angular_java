@@ -1,22 +1,7 @@
-<script id="partials/navDropDown.html" type="text/ng-template">
-    <a class="dropdown-toggle">
-        <span>
-            <span class="glyphicon glyphicon-user"></span>
-            <span class="hidden-tablet">
-                Account
-            </span>
-            <b class="caret"></b>
-        </span>
-    </a>
-    <ul class="dropdown-menu">
-        <li ng-repeat="option in options">
-            <a href="#/{{option.href}}"><span class="glyphicon {{option.class}}"></span>&nbsp;<span>{{option.text}}</span></a>
-        </li>
-    </ul>
-</script>
 
-<script id="partials/selectDropDown.html" type="text/ng-template">
-    <a class="dropdown-toggle">
+<script id="views/template/selectDropDown.html" type="text/ng-template">
+    <div class="dropdown container-float-right">
+        <a class="dropdown-toggle">
         <span>
             <span class="glyphicon glyphicon-user"></span>
             <span class="hidden-tablet">
@@ -24,10 +9,11 @@
             </span>
             <b class="caret"></b>
         </span>
-    </a>
-    <ul class="dropdown-menu">
-        <li ng-repeat="option in options" ng-click="select($index)">
-            <span>{{option.text}}</span>
-        </li>
-    </ul>
+        </a>
+        <ul class="dropdown-menu dropdown-text">
+            <li ng-repeat="option in options" ng-click="select($index)">
+                <span>{{option.text}}</span>
+            </li>
+        </ul>
+    </div>
 </script>

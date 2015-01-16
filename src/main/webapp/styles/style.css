@@ -4,3 +4,13 @@
 .dropdown-toggle:hover{
     cursor: pointer;
 }
+.dropdown-menu{
+    min-width: 80px;
+}
+.container-float-right{
+    margin-right: 20px;
+    float: right;
+}
+.dropdown-text{
+    text-align: center;
+}

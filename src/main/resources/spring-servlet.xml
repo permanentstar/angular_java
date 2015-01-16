@@ -8,11 +8,6 @@
     <mvc:resources mapping="/images/**" location="/images/"/>
     <mvc:resources mapping="/fonts/**" location="/fonts/"/>
     <mvc:resources mapping="/scripts/**" location="/scripts/"/>
-    <!--以下为dev profile-->
-    <beans profile = "dev">
-        <mvc:resources mapping="/bower_components/**" location="/bower_components/"/>
-        <mvc:resources mapping="/vendors/**" location="/vendors/"/>
-    </beans>
     <beans>
         <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
             <property name="templateLoaderPath" value="/"/>

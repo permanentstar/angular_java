@@ -106,7 +106,7 @@ angular.module("app.directives")
             }
         };
     })
-    .directive('ngPagination',function(){
+    .directive('pagination',function(){
         return {
             restrict:'EA',
             template:'<ul class="pagebar">' +
@@ -173,7 +173,8 @@ angular.module("app.directives")
     .directive('selectDropDown',function(){
         return {
             restrict:'EA',
-            templateUrl:'partials/selectDropDown.html',
+            templateUrl:'views/template/selectDropDown.html',
+            replace:true,
             scope:{
                 options:'='
             },
@@ -189,10 +190,34 @@ angular.module("app.directives")
                 ngModel.$render = function(){
                     me.selected = ngModel.$viewValue;
                 };
-                element.mouseover(function(){
-                    element.find(".dropdown-menu").slideDown(500);
+                element.mouseenter(function(){
+                    element.find(".dropdown-menu").stop().slideDown(500);
                 }).mouseleave(function(){
-                    element.find(".dropdown-menu").slideUp(500);
+                    element.find(".dropdown-menu").stop().slideUp(500);
+                });
+            }
+        }
+    })
+    .directive('navDropDown',function(){
+        return {
+            restrict:'EA',
+            template:'<a class="dropdown-toggle">'+
+                '<span class="glyphicon glyphicon-user"></span> '+
+                '<span class="hidden-tablet">{{options.title}}</span>'+
+                '<b class="caret"></b></a>'+
+                '<ul class="dropdown-menu">'+
+                '<li ng-repeat="option in options">'+
+                '<a href="#/{{option.href}}"><span class="glyphicon {{option.class}}"></span> <span>{{option.text}}</span></a>'+
+                '</li></ul>',
+            scope:{
+                options:'='
+            },
+            link:function(scope,element){
+                var me = scope;
+                element.mouseenter(function(){
+                    element.find(".dropdown-menu").stop().slideDown(500);
+                }).mouseleave(function(){
+                    element.find(".dropdown-menu").stop().slideUp(500);
                 });
             }
         }

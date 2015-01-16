@@ -31,26 +31,7 @@
                                 <span>Home</span>
                             </a>
                         </li>
-                        <li class="dropdown pointer">
-                            <a class="dropdown-toggle" href="">
-                                <span>
-                                    <span class="glyphicon glyphicon-user"></span>
-                                    <span class="hidden-tablet">
-                                        Account
-                                    </span>
-                                    <b class="caret"></b>
-                                </span>
-                            </a>
-                            <ul class="dropdown-menu" ng-controller="MenuController">
-                                <li ><a href="#/logout"><span class="glyphicon glyphicon-log-out"></span>
-                                    &nbsp;<span >Log out</span></a></li>
-                                <li ><a href="#/login"><span class="glyphicon glyphicon-log-in"></span>
-                                    &nbsp;<span>Authenticate</span></a></li>
-
-                                <li ><a href="#/register"><span class="glyphicon glyphicon-plus-sign"></span>
-                                    &nbsp;<span>Register</span></a></li>
-                            </ul>
-                        </li>
+                        <li class="dropdown" nav-drop-down options="viewNav"></li>
                     </ul>
                 </div>
             </div>
@@ -62,7 +43,6 @@
                 <p>This is your footer</p>
             </div>
         </div>
-        <!--<ng-include src="'template.html'"></ng-include>-->
         <div class="view-template" ng-include="'views/template.html'"></div>
         <!-- build:js scripts/scripts.js -->
         <!-- bower:js -->

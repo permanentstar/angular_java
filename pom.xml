@@ -134,6 +134,21 @@
 
     <!-- Package as an executable jar -->
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!-- 资源根目录排除各环境的配置，使用单独的资源目录来指定 -->
+                <excludes>
+                    <exclude>test/*</exclude>
+                    <exclude>prod/*</exclude>
+                    <exclude>dev/*</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources/${profiles.activation}</directory>
+            </resource>
+        </resources>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
@@ -166,6 +181,9 @@
     <profiles>
         <profile>
             <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <profiles.activation>dev</profiles.activation>
                 <logback.loglevel>DEBUG</logback.loglevel>
@@ -197,9 +215,6 @@
         </profile>
         <profile>
             <id>prod</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <properties>
                 <profiles.activation>prod</profiles.activation>
                 <logback.loglevel>INFO</logback.loglevel>
